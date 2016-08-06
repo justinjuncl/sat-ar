@@ -7,16 +7,23 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-var geometry = new THREE.SphereGeometry( 7, 0.1, 0.1, 0, Math.PI*2, 0, Math.PI/2 );
+var topHemiGeometry = new THREE.SphereGeometry( 7, 30, 15, 0, Math.PI*2, 0, Math.PI/2);
+var topHemiMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
+var topHemi = new THREE.Mesh( topHemiGeometry, topHemiMaterial );
 
-var material = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+var topHemiEdge = new THREE.EdgesHelper( topHemi, 0x34baff );
+topHemiEdge.material.linewidth = 1;
 
-// material.side = THREE.BackSide;
+var bottomHemiGeometry = new THREE.SphereGeometry( 7, 15, 30, 0, Math.PI*2, Math.PI/2, Math.PI );
+var bottomHemiMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
+var bottomHemi = new THREE.Mesh( bottomHemiGeometry, bottomHemiMaterial );
 
-var cube = new THREE.Mesh( geometry, material );
+var bottomHemiEdge = new THREE.EdgesHelper( bottomHemi, 0x34ffba );
+bottomHemiEdge.material.linewidth = 1;
 
+scene.add( topHemiEdge );
+scene.add( bottomHemiEdge );
 
-scene.add( cube );
 
 camera.position.z = 5;
 
