@@ -61,7 +61,7 @@ var positionEcf   = satellite.eciToEcf(positionEci, gmst),
     // Look Angles may be accessed by `azimuth`, `elevation`, `range_sat` properties.
     var azimuth   = lookAngles.azimuth,
         elevation = lookAngles.elevation,
-        rangeSat  = lookAngles.rangeSat;
+        rangeSat  = lookAngles.rangeSat/80;
 
     //azimuth to cartesian
     var satelliteX = rangeSat * Math.cos(elevation) * Math.sin(azimuth),
@@ -77,7 +77,7 @@ var positionEcf   = satellite.eciToEcf(positionEci, gmst),
     var longitudeStr = satellite.degreesLong(longitude),
         latitudeStr  = satellite.degreesLat(latitude);
 
-var issSphere = new THREE.SphereGeometry( 10, 15, 15);
+var issSphere = new THREE.SphereGeometry( 3, 15, 15);
 var issMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 var iss = new THREE.Mesh( issSphere, issMaterial );
 
