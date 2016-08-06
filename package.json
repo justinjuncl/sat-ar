@@ -1,0 +1,17 @@
+{
+  "name": "sat-ar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.2",
+    "satellite.js": "^1.2.0",
+    "three": "^0.79.0"
+  }
+}
