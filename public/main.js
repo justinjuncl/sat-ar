@@ -55,7 +55,6 @@ var issMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 var iss = new THREE.Mesh( issSphere, issMaterial );
 
 scene.add(iss);
-console.log("pos" ,latitudeStr,longitudeStr);
 
 
 var currentTime, positionAndVelocity, positionEci, velocityEci, gmst, positionEci, observerEcf, positionGd, lookAngles, azimuth, elevation, rangeSat, satelliteX, satelliteY, satelliteZ;
