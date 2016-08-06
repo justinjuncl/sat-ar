@@ -17,7 +17,7 @@ THREE.DeviceOrientationControls = function( object ) {
 	this.deviceOrientation = {};
 	this.screenOrientation = 0;
 
-	this.alpha = 0;
+	this.alpha = window.orientation;
 	this.alphaOffsetAngle = 0;
 
 
