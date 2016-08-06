@@ -16,7 +16,7 @@ var topHemi = new THREE.Mesh( topHemiGeometry, topHemiMaterial );
 var topHemiEdge = new THREE.EdgesHelper( topHemi, 0x34baff );
 topHemiEdge.material.linewidth = 1;
 
-var bottomHemiGeometry = new THREE.SphereGeometry( 7, 30, 15, 0, Math.PI*2, Math.PI, Math.PI*2 );
+var bottomHemiGeometry = new THREE.SphereGeometry( 7, 30, 15, 0, Math.PI*2, Math.PI/2, Math.PI/2 );
 var bottomHemiMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
 var bottomHemi = new THREE.Mesh( bottomHemiGeometry, bottomHemiMaterial );
 
