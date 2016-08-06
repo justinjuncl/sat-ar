@@ -2,7 +2,7 @@
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-var gyroControls = new THREE.DeviceOrientationControls( camera );
+// var gyroControls = new THREE.DeviceOrientationControls( camera );
 // var mouseControls = new THREE.PointerLockControls( camera );
 
 var renderer = new THREE.WebGLRenderer();
@@ -57,14 +57,16 @@ var positionEcf   = satellite.eciToEcf(positionEci, gmst),
     positionGd    = satellite.eciToGeodetic(positionEci, gmst),
     lookAngles    = satellite.ecfToLookAngles(observerGd, positionEcf);
 
- var satelliteX = positionEci.x,
-        satelliteY = positionEci.y,
-        satelliteZ = positionEci.z;
 
     // Look Angles may be accessed by `azimuth`, `elevation`, `range_sat` properties.
     var azimuth   = lookAngles.azimuth,
         elevation = lookAngles.elevation,
         rangeSat  = lookAngles.rangeSat;
+
+    //azimuth to cartesian
+    var satelliteX = rangeSat * Math.cos(elevation) * Math.sin(azimuth),
+        satelliteY = rangeSat * Math.cos(elevation) * Math.cos(azimuth),
+        satelliteZ = rangeSat * Math.sin(elevation);
 
     // Geodetic coords are accessed via `longitude`, `latitude`, `height`.
     var longitude = positionGd.longitude,
@@ -75,16 +77,16 @@ var positionEcf   = satellite.eciToEcf(positionEci, gmst),
     var longitudeStr = satellite.degreesLong(longitude),
         latitudeStr  = satellite.degreesLat(latitude);
 
-
-var issSphere = new THREE.SphereGeometry( 1, 15, 15);
-var issMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+var issSphere = new THREE.SphereGeometry( 10, 15, 15);
+var issMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 var iss = new THREE.Mesh( issSphere, issMaterial );
 
-iss.position.x = satelliteX / 3000;
-iss.position.y = satelliteY / 3000;
-iss.position.z = satelliteZ / 3000;
+iss.position.x = satelliteX;
+iss.position.y = satelliteY;
+iss.position.z = satelliteZ;
 
 scene.add(iss);
+console.log("pos" ,latitudeStr,longitudeStr);
 
 
 // ---------------------------------------------------------------
@@ -92,9 +94,11 @@ scene.add(iss);
 function render () {
 	requestAnimationFrame( render );
 
-	gyroControls.update();
+	// gyroControls.update();
 
 	renderer.render(scene, camera);
 };
 
 render();
+
+
