@@ -2,7 +2,7 @@
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-// var gyroControls = new THREE.DeviceOrientationControls( camera );
+var gyroControls = new THREE.DeviceOrientationControls( camera );
 // var mouseControls = new THREE.PointerLockControls( camera );
 
 var renderer = new THREE.WebGLRenderer();
@@ -94,7 +94,7 @@ console.log("pos" ,latitudeStr,longitudeStr);
 function render () {
 	requestAnimationFrame( render );
 
-	// gyroControls.update();
+	gyroControls.update();
 
 	renderer.render(scene, camera);
 };
