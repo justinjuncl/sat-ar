@@ -1,9 +1,9 @@
 
-
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-var controls = new THREE.DeviceOrientationControls( camera );
+var gyroControls = new THREE.DeviceOrientationControls( camera );
+// var mouseControls = new THREE.PointerLockControls( camera );
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -16,7 +16,7 @@ var topHemi = new THREE.Mesh( topHemiGeometry, topHemiMaterial );
 var topHemiEdge = new THREE.EdgesHelper( topHemi, 0x34baff );
 topHemiEdge.material.linewidth = 1;
 
-var bottomHemiGeometry = new THREE.SphereGeometry( 7, 15, 30, 0, Math.PI*2, Math.PI/2, Math.PI );
+var bottomHemiGeometry = new THREE.SphereGeometry( 7, 30, 15, 0, Math.PI*2, Math.PI, Math.PI*2 );
 var bottomHemiMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
 var bottomHemi = new THREE.Mesh( bottomHemiGeometry, bottomHemiMaterial );
 
@@ -26,17 +26,8 @@ bottomHemiEdge.material.linewidth = 1;
 scene.add( topHemiEdge );
 scene.add( bottomHemiEdge );
 
-camera.position.z = 5;
+// ---------------------------------------------------------------
 
-function render () {
-	requestAnimationFrame( render );
-
-	controls.update();
-
-	renderer.render(scene, camera);
-};
-
-render();
 
 
 var issRecord = new SatelliteRecord([
@@ -83,3 +74,27 @@ var positionEcf   = satellite.eciToEcf(positionEci, gmst),
     //  Convert the RADIANS to DEGREES for pretty printing (appends "N", "S", "E", "W". etc).
     var longitudeStr = satellite.degreesLong(longitude),
         latitudeStr  = satellite.degreesLat(latitude);
+
+
+var issSphere = new THREE.SphereGeometry( 1, 15, 15);
+var issMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+var iss = new THREE.Mesh( issSphere, issMaterial );
+
+iss.position.x = satelliteX / 3000;
+iss.position.y = satelliteY / 3000;
+iss.position.z = satelliteZ / 3000;
+
+scene.add(iss);
+
+
+// ---------------------------------------------------------------
+
+function render () {
+	requestAnimationFrame( render );
+
+	gyroControls.update();
+
+	renderer.render(scene, camera);
+};
+
+render();
