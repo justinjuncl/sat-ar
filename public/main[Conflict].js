@@ -26,25 +26,6 @@ bottomHemiEdge.material.linewidth = 1;
 scene.add( topHemiEdge );
 scene.add( bottomHemiEdge );
 
-
-
-
-// positive x
-var sphereXGeometry = new THREE.SphereGeometry( 3, 15, 15);
-var sphereXMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-var spehreX = new THREE.Mesh( sphereXGeometry, sphereXMaterial );
-sphereX.position = {x: 17, y: 0, z: 0};
-
-var sphereYGeometry = new THREE.SphereGeometry( 3, 15, 15);
-var sphereYMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-var spehreY = new THREE.Mesh( sphereYGeometry, sphereYMaterial );
-sphereX.position = {x: 0, y: 17, z: 0};
-
-var sphereZGeometry = new THREE.SphereGeometry( 3, 15, 15);
-var sphereZMaterial = new THREE.MeshBasicMaterial( { color: 0x0000ff } );
-var spehreZ = new THREE.Mesh( sphereZGeometry, sphereZMaterial );
-sphereX.position = {x: 0, y: 0, z: 17};
-
 // ---------------------------------------------------------------
 
 var issRecord = new SatelliteRecord([
@@ -60,13 +41,13 @@ var observerGd = {
 };
 
     // // Geodetic coords are accessed via `longitude`, `latitude`, `height`.
-    // var longitude = positionGd.longitude,
-    //     latitude  = positionGd.latitude,
-    //     height    = positionGd.height;
+     var longitude = positionGd.longitude,
+         latitude  = positionGd.latitude,
+         height    = positionGd.height;
 
     // //  Convert the RADIANS to DEGREES for pretty printing (appends "N", "S", "E", "W". etc).
-    // var longitudeStr = satellite.degreesLong(longitude),
-    //     latitudeStr  = satellite.degreesLat(latitude);
+     var longitudeStr = satellite.degreesLong(longitude),
+         latitudeStr  = satellite.degreesLat(latitude);
 
 
 var issSphere = new THREE.SphereGeometry( 3, 15, 15);
@@ -74,6 +55,7 @@ var issMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 var iss = new THREE.Mesh( issSphere, issMaterial );
 
 scene.add(iss);
+console.log("pos" ,latitudeStr,longitudeStr);
 
 
 var currentTime, positionAndVelocity, positionEci, velocityEci, gmst, positionEci, observerEcf, positionGd, lookAngles, azimuth, elevation, rangeSat, satelliteX, satelliteY, satelliteZ;
@@ -93,6 +75,7 @@ function render () {
     positionEci = positionAndVelocity.position,
     velocityEci = positionAndVelocity.velocity;
 
+
     gmst = satellite.gstimeFromTime( currentTime );
 
 // You can get ECF, Geodetic, Look Angles, and Doppler Factor.
@@ -108,9 +91,9 @@ function render () {
         rangeSat  = lookAngles.rangeSat/80;
 
     //azimuth to cartesian
-        satelliteX = rangeSat * Math.sin(elevation) * Math.cos(azimuth),
-        satelliteY = rangeSat * Math.sin(elevation) * Math.sin(azimuth),
-        satelliteZ = rangeSat * Math.cos(elevation);
+        satelliteX = rangeSat * Math.cos(elevation) * Math.sin(azimuth),
+        satelliteY = rangeSat * Math.cos(elevation) * Math.cos(azimuth),
+        satelliteZ = rangeSat * Math.sin(elevation);
 
 iss.position.x = satelliteX;
 iss.position.y = satelliteY;
